@@ -1,19 +1,13 @@
 import { Module } from "@nestjs/common";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
-import { TasksController } from "./tasks/tasks.controller";
-import { TasksService } from "./tasks/tasks.service";
 import { MongooseModule } from "@nestjs/mongoose";
-import { TaskSchema } from "./schemas/task.schema";
+import { TasksModule } from "./tasks/tasks.module";
+import { UsersModule } from "./users/users.module";
 
-const mongoUri = process.env.MONGO_URI || "mongodb://localhost:27017/nest";
+const mongoUri =
+  process.env.MONGO_URI ||
+  "mongodb+srv://tk42100678_db_user:FML3Y313Cez5HL8G@cluster0.4l0aakx.mongodb.net/";
 
 @Module({
-  imports: [
-    MongooseModule.forRoot(mongoUri),
-    MongooseModule.forFeature([{ name: "Task", schema: TaskSchema }]),
-  ],
-  controllers: [AppController, TasksController],
-  providers: [AppService, TasksService],
+  imports: [MongooseModule.forRoot(mongoUri), TasksModule, UsersModule],
 })
 export class AppModule {}
